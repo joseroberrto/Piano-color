@@ -108,3 +108,38 @@ ol {
 header{
     align-items: left;
 }
+
+
+.jogo-container{
+    margin: auto;
+
+    width: 900px;
+    height: 700px;
+  
+}
+
+.pergunta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cores{
+    margin-top: 30px;
+    width: 350px;
+    height: 350px;
+    border-radius: 80%;
+    background-color: gray;
+}
+
+.mais{
+    font-size: 40px;
+}
+
+.opcoes{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
