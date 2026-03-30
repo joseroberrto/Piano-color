@@ -1,13 +1,23 @@
 let respostaCorreta = "";
-const coresPrimarias = ["blue","yellow","red"];
+
+///novas cores
+const cores = [
+    "blue",
+    "yellow",
+    "red",
+    "green",
+    "purple",
+    "orange"
+];
 const cor1 = document.getElementById('cor1')
 const cor2 = document.getElementById('cor2')
 
 
 function sortearCor(){
-    let indice = Math.floor(Math.random()*coresPrimarias.length)
-    return coresPrimarias[indice]
+    let indice = Math.floor(Math.random() * cores.length);
+    return cores[indice];
 }
+
 
 function gerarCores(){
 
@@ -27,7 +37,17 @@ function misturarCores(cor1, cor2) {
     const mistura = {
         "blue-yellow": "green",
         "blue-red": "purple",
-        "red-yellow": "orange"
+        "red-yellow": "orange",
+
+
+        //novas misturas
+        "blue-green": "cyan",
+        "red-purple": "magenta",
+        "yellow-orange": "gold",
+
+        "green-yellow": "lime",
+        "purple-blue": "indigo",
+        "orange-red": "darkorange"
     };
 
     let cores = [cor1, cor2];
@@ -95,9 +115,22 @@ function mostrarFeedback(acertou) {
 
 const teclas = document.querySelectorAll(".key");
 
+function tocarNota(nota){
+    const audio = new Audio(`AUDIO/${nota}.mp3`);
+    audio.play().catch(e => console.log("Erro ao tocar audio"));
+}
+
 teclas.forEach(tecla => {
     tecla.addEventListener("click", () => {
         const corEscolhida = tecla.dataset.color;
+        const teclaEscolhida = tecla.dataset.note;
+        console.log(teclaEscolhida)
+        console.log(corEscolhida)
+        
+
+        if(teclaEscolhida){
+            tocarNota(teclaEscolhida)
+        }
 
         // ignora teclas pretas 
         if (!corEscolhida) return;
