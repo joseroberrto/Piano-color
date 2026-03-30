@@ -1,3 +1,4 @@
+let respostaCorreta = "";
 const coresPrimarias = ["blue","yellow","red"];
 const cor1 = document.getElementById('cor1')
 const cor2 = document.getElementById('cor2')
@@ -51,8 +52,47 @@ function iniciarjogo(){
     cor1.style.backgroundColor = corA;
     cor2.style.backgroundColor = corB;
 
-    let resultado = misturarCores(corA, corB);
+     respostaCorreta = misturarCores(corA, corB);
 
-    console.log("Resultado:", resultado);
+    console.log("Resultado:", respostaCorreta);
 }
+
+function mostrarFeedback(acertou) {
+    const feedback = document.getElementById("feedback");
+
+    if (acertou) {
+        feedback.textContent = "Acertou! 🎉";
+        feedback.className = "ativo acerto";
+    } else {
+        feedback.textContent = "Errou! ❌";
+        feedback.className = "ativo erro";
+    }
+
+    setTimeout(() => {
+        feedback.className = "";
+    }, 1500);
+}
+
+const teclas = document.querySelectorAll(".key");
+
+teclas.forEach(tecla => {
+    tecla.addEventListener("click", () => {
+        const corEscolhida = tecla.dataset.color;
+
+        // ignora teclas pretas 
+        if (!corEscolhida) return;
+
+        if (corEscolhida === respostaCorreta) {
+            mostrarFeedback(true);
+
+             setTimeout(() => {
+                iniciarjogo();
+                podeClicar = true;
+            }, 1000);
+
+        } else {
+            mostrarFeedback(false);
+        }
+    });
+});
 
