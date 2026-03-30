@@ -230,7 +230,25 @@ header{
     background: rgb(220, 68, 93);
 }
 
+.black[data-color="red-purple"]:hover {
+    background-color: #722F37;
+}
 
+.black[data-color="yellow-green"]:hover {
+    background-color: #9ACD32;
+}
+
+.black[data-color="blue-green"]:hover {
+    background-color: #0D98BA;
+}
+
+.black[data-color="blue-purple"]:hover {
+    background-color: #8A2BE2;
+}
+
+.black[data-color="yellow-orange"]:hover {
+    background-color: #FFECB3;
+}
 /* FEEDBACK */
 .feedback {
     width: 100%;

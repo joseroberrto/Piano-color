@@ -62,7 +62,7 @@ function iniciarjogo(){
     setTimeout(() => {
         cor1.classList.remove('pop');
         cor2.classList.remove('pop');
-    }, 280);3
+    }, 280);
 
     console.log("Resultado:", respostaCorreta);
 }
@@ -93,11 +93,21 @@ function mostrarFeedback(acertou) {
     }, 800);
 }
 
+function tocarSom(nota) {
+    const audio = new Audio (`AUDIO/${nota}.mp3`);
+    audio.play().catch(e => console.log("Erro ao tocar som:",e));
+}
+
 const teclas = document.querySelectorAll(".key");
 
 teclas.forEach(tecla => {
     tecla.addEventListener("click", () => {
         const corEscolhida = tecla.dataset.color;
+        const notaTocada = tecla.dataset.note;
+
+        if (notaTocada) {
+            tocarSom(notaTocada);
+        }
 
         // ignora teclas pretas 
         if (!corEscolhida) return;
