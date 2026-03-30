@@ -1,42 +1,83 @@
-let respostaCorreta = "";
-const coresPrimarias = ["blue","yellow","red"];
-const cor1 = document.getElementById('cor1')
-const cor2 = document.getElementById('cor2')
+const fases_melodia1 = [
+    {
+    nome:"parte1",
+    sequencia:["green", "yellow-orange","yellow-green"]
+    },
+    {
+    nome:"parte2",
+    sequencia:["green", "yellow-orange","blue"]
+    },
+    {
+    nome:"parte3",
+    sequencia:["green", "yellow-orange","red2","green","yellow-orange"]
+    },
+    {
+    nome:"parte4",
+    sequencia:["orange", "purple","orange","green"]
+    },
 
+];
 
-function sortearCor(){
-    let indice = Math.floor(Math.random()*coresPrimarias.length)
-    return coresPrimarias[indice]
-}
+let faseAtual = 0;
+let indicePasso = 0;
 
-function gerarCores(){
+function verificarProgresso(corClicada) {
+    const melodiaDaFase = fases_melodia1[faseAtual].sequencia;
 
-    let cor1 = sortearCor();
-    let cor2 = sortearCor();
+    if (corClicada === melodiaDaFase[indicePasso]) {
+        indicePasso++;
 
-    while (cor2 === cor1) {
-        cor2 = sortearCor();
+    if (indicePasso === melodiaDaFase.length) {
+            mostrarFeedback(true);
+
+            setTimeout(() => {
+                proximaFase();
+            }, 1500);
+        }
+    } else {
+        mostrarFeedback(false);
     }
+}
 
-    return [cor1,cor2]
+function proximaFase() {
+    faseAtual++;
+    indicePasso = 0;
 
+    if (faseAtual < fases_melodia1.length) {
+        console.log("Iniciando: " + fases_melodia1[faseAtual].nome);
+        atualizarBolinhasNoPainel(); // Função para mudar as cores no topo
+    } else {
+        alert("Parabéns! Você completou a melodia inteira! 🎉");
+        faseAtual = 0; // Reinicia o jogo
+        iniciarjogo();
+    }
+}
+
+function atualizarBolinhasNoPainel() {
+    const coresNovaFase = fases_melodia1[faseAtual].sequencia;
+    const container = document.querySelector(".melodia1");
+    
+    // Limpa o que está lá
+    container.innerHTML = "";
+
+    // Cria as novas bolinhas dinamicamente
+    coresNovaFase.forEach((cor, index) => {
+        const novaBolinha = document.createElement("div");
+        novaBolinha.id = `cor${index + 1}`;
+        novaBolinha.className = `cores cor-${cor}`; // Usa a classe de cor correspondente
+        container.appendChild(novaBolinha);
+
+        // Adiciona o sinal de "+" entre elas, exceto na última
+        if (index < coresNovaFase.length - 1) {
+            const mais = document.createElement("span");
+            mais.className = "mais";
+            mais.textContent = "+";
+            container.appendChild(mais);
+        }
+    });
 }
 
 
-function misturarCores(cor1, cor2) {
-    const mistura = {
-        "blue-yellow": "green",
-        "blue-red": "purple",
-        "red-yellow": "orange"
-    };
-
-    let cores = [cor1, cor2];
-    cores.sort();
-
-    let chave = cores[0] + "-" + cores[1];
-
-    return mistura[chave];
-}
 
 function iniciarjogo(){
     console.log('botão clicado');
@@ -46,52 +87,13 @@ function iniciarjogo(){
     const jogo = document.getElementById('jogo');
     jogo.style.display = 'flex';
 
-
-    let [corA, corB] = gerarCores();
-
-    cor1.style.backgroundColor = corA;
-    cor2.style.backgroundColor = corB;
-
-     respostaCorreta = misturarCores(corA, corB);
-
-      // ativa efeito pop
-    cor1.classList.add('pop');
-    cor2.classList.add('pop');
-
-    // remove pop após 280ms para poder reaplicar depois
-    setTimeout(() => {
-        cor1.classList.remove('pop');
-        cor2.classList.remove('pop');
-    }, 280);
-
-    console.log("Resultado:", respostaCorreta);
+    faseAtual = 0;
+    indicePasso = 0;
+    
+    atualizarBolinhasNoPainel();
+   
 }
 
-function mostrarFeedback(acertou) {
-    const feedback = document.getElementById("feedback");
-
-    // Remove classes antigas e força reinício da animação
-    feedback.classList.remove("show", "acerto", "erro");
-    void feedback.offsetWidth;
-
-    // Define tipo de feedback
-    if (acertou) {
-        feedback.textContent = "Acertou! 🎉";
-        feedback.classList.add("acerto");
-    } else {
-        feedback.textContent = "Errou! ❌";
-        feedback.classList.add("erro");
-    }
-
-    // Adiciona a classe show para animar
-    feedback.classList.add("show");
-
-    // Remove o feedback depois da animação
-    setTimeout(() => {
-        feedback.classList.remove("show", "acerto", "erro");
-        feedback.textContent = "";
-    }, 800);
-}
 
 function tocarSom(nota) {
     const audio = new Audio (`AUDIO/${nota}.mp3`);
@@ -109,20 +111,22 @@ teclas.forEach(tecla => {
             tocarSom(notaTocada);
         }
 
-        // ignora teclas pretas 
         if (!corEscolhida) return;
 
-        if (corEscolhida === respostaCorreta) {
-            mostrarFeedback(true);
+        verificarProgresso(corEscolhida);
 
-             setTimeout(() => {
-                iniciarjogo();
-                podeClicar = true;
-            }, 1500);
-
-        } else {
-            mostrarFeedback(false);
-        }
     });
 });
 
+function mostrarFeedback(sucesso) {
+    const feedback = document.getElementById("feedback");
+    if (!feedback) return;
+
+    feedback.textContent = sucesso ? "Acertou! 🎉" : "Ops! Tente novamente. ❌";
+    feedback.className = `feedback ${sucesso ? "acerto" : "erro"} show`;
+
+    // Remove a mensagem depois de 1.2 segundos
+    setTimeout(() => {
+        feedback.className = "feedback";
+    }, 1200);
+}
