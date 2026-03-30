@@ -109,12 +109,17 @@ header{
     align-items: left;
 }
 
+/* Caixa de cores */
+#jogo {
+    display: flex;
+    flex-direction: column;   
+    align-items: center;      
+    /*justify-content: space-between;*/
+    height: 100vh;
+}
 
 .jogo-container{
-    margin: auto;
-
-    width: 900px;
-    height: 700px;
+    margin: 50px;
   
 }
 
@@ -137,9 +142,100 @@ header{
     font-size: 40px;
 }
 
-.opcoes{
+/* piano */
+.piano {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 15px;
     justify-content: center;
-    margin-top: 30px;
+    align-items: flex-start;
+}
+
+/* teclas */
+.key {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.white {
+    width: 60px;
+    height: 200px;
+    background: white;
+    z-index: 1;
+}
+
+.black {
+    width: 40px;
+    height: 120px;
+     border-radius: 0 0 5px 5px;
+    background: black;
+    position: absolute;
+    z-index: 2;
+}
+
+/*  efeito click */
+.key:active {
+    transform: scale(0.97);
+    background: gray;
+}
+
+.white[data-color="red"]:hover {
+    background: red;
+}
+
+.white[data-color="blue"]:hover {
+    background: blue;
+}
+
+.white[data-color="yellow"]:hover {
+    background: yellow;
+}
+
+.white[data-color="purple"]:hover {
+    background: purple;
+}
+
+.white[data-color="green"]:hover {
+    background: green;
+}
+
+.white[data-color="orange"]:hover {
+    background: rgb(231, 151, 2);
+}
+
+.white[data-color="pink"]:hover {
+    background: rgb(220, 68, 93);
+}
+
+
+.feedback {
+    width: 100%;              
+    text-align: center;       
+    
+    font-size: 40px;
+     margin: 40px 0; 
+
+    color: white;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.feedback.ativo {
+    opacity: 1;
+}
+/* quando aparece */
+.feedback.show {
+    opacity: 1;
+}
+
+/* acerto */
+.feedback.acerto {
+    background: green;
+}
+
+/* erro */
+.feedback.erro {
+    background: red;
 }
