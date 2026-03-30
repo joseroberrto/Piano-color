@@ -201,7 +201,7 @@ header{
     transform: scale(0.97);
     background: gray;
 }
-
+/* quinta oitava*/
 .white[data-color="red"]:hover {
     background: red;
 }
@@ -249,6 +249,57 @@ header{
 .black[data-color="yellow-orange"]:hover {
     background-color: #FFECB3;
 }
+
+/* sexta oitava*/
+
+.white[data-color="red2"]:hover {
+    background: LightCoral;
+}
+
+.white[data-color="blue2"]:hover {
+    background: Aquamarine;
+}
+
+.white[data-color="yellow2"]:hover {
+    background: LemonChiffon;
+}
+
+.white[data-color="purple2"]:hover {
+    background: Lavender;
+}
+
+.white[data-color="green2"]:hover {
+    background: PaleGreen;
+}
+
+.white[data-color="orange2"]:hover {
+    background: LightSalmon;
+}
+
+.white[data-color="pink2"]:hover {
+    background: MistyRose;
+}
+
+.black[data-color="red-purple2"]:hover {
+    background-color: #2F4F4F;
+}
+
+.black[data-color="yellow-green2"]:hover {
+    background-color: #556B2F;
+}
+
+.black[data-color="blue-green2"]:hover {
+    background-color: #483D8B;
+}
+
+.black[data-color="blue-purple2"]:hover {
+    background-color: #708090;
+}
+
+.black[data-color="yellow-orange2"]:hover {
+    background-color: #191970;
+}
+
 /* FEEDBACK */
 .feedback {
     width: 100%;
